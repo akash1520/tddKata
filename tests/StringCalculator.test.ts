@@ -41,6 +41,14 @@ describe('StringCalculator', () => {
     it('should handle empty number string after custom delimiter', () => {
       expect(calculator.add('//;\n')).toBe(0);
     });
+
+    it('should support delimiters of any length with brackets', () => {
+      expect(calculator.add('//[***]\n1***2***3')).toBe(6);
+    });
+
+    it('should support single character delimiter with brackets', () => {
+      expect(calculator.add('//[x]\n1x2x3')).toBe(6);
+    });
   });
 
   describe('Negative numbers', () => {

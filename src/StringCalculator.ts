@@ -17,12 +17,20 @@ export class StringCalculator {
     // Handle custom delimiter format: //[delimiter]\n[numbers...]
     if (numbers.startsWith('//')) {
       const parts = numbers.split('\n');
-      const delimiter = parts[0]?.slice(2) || ','; // Remove '//' prefix, fallback to comma
+      const delimiterLine = parts[0] || '';
       const numberString = parts[1] || '';
+
+      // Check for bracket format: //[delimiter]
+      if (delimiterLine.startsWith('//[') && delimiterLine.endsWith(']')) {
+        const delimiter = delimiterLine.slice(3, -1);
+        return this.parseAndSum(numberString, delimiter);
+      }
+
+      // Handle simple format: //delimiter
+      const delimiter = delimiterLine.slice(2);
       return this.parseAndSum(numberString, delimiter);
     }
 
-    // Default: split on comma and newline
     return this.parseAndSum(numbers, /[,\n]/);
   }
 
