@@ -18,19 +18,20 @@ export class StringCalculator {
       return 0;
     }
 
-    // Check for custom delimiter format: //[delimiter]\n[numbers...]
+    // Handle custom delimiter format: //[delimiter]\n[numbers...]
     if (numbers.startsWith('//')) {
       const parts = numbers.split('\n');
-      if (parts.length >= 2 && parts[0] && parts[1]) {
-        const delimiter = parts[0].slice(2); // Remove '//' prefix
-        const numberString = parts[1];
-        const numberArray = numberString.split(delimiter).map(num => parseInt(num.trim(), 10));
-        return numberArray.reduce((sum, num) => sum + num, 0);
-      }
+      const delimiter = parts[0]?.slice(2) || ','; // Remove '//' prefix, fallback to comma
+      const numberString = parts[1] || '';
+      return this.parseAndSum(numberString, delimiter);
     }
 
     // Default: split on comma and newline
-    const numberArray = numbers.split(/[,\n]/).map(num => parseInt(num.trim(), 10));
+    return this.parseAndSum(numbers, /[,\n]/);
+  }
+
+  private parseAndSum(numbers: string, delimiter: string | RegExp): number {
+    const numberArray = numbers.split(delimiter).map(num => parseInt(num.trim(), 10));
     return numberArray.reduce((sum, num) => sum + num, 0);
   }
 }
