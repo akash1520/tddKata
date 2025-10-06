@@ -42,4 +42,15 @@ describe('StringCalculator', () => {
       expect(calculator.add('//;\n')).toBe(0);
     });
   });
+
+  describe('Negative numbers', () => {
+    it('should throw exception for single negative number', () => {
+      expect(() => calculator.add('-1')).toThrow('negative numbers not allowed -1');
+    });
+
+    it('should throw exception for multiple negative numbers', () => {
+      expect(() => calculator.add('-1,2,-3')).toThrow('negative numbers not allowed -1,-3');
+    });
+  });
+
 });
