@@ -14,10 +14,6 @@ export class StringCalculator {
    * @returns Sum of the numbers
    */
   public add(numbers: string): number {
-    if (numbers === '') {
-      return 0;
-    }
-
     // Handle custom delimiter format: //[delimiter]\n[numbers...]
     if (numbers.startsWith('//')) {
       const parts = numbers.split('\n');
@@ -31,6 +27,10 @@ export class StringCalculator {
   }
 
   private parseAndSum(numbers: string, delimiter: string | RegExp): number {
+    if (numbers === '') {
+      return 0;
+    }
+
     const numberArray = numbers.split(delimiter).map(num => parseInt(num.trim(), 10));
     return numberArray.reduce((sum, num) => sum + num, 0);
   }

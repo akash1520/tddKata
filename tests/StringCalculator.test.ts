@@ -33,5 +33,13 @@ describe('StringCalculator', () => {
     it('should support custom delimiter', () => {
       expect(calculator.add('//;\n1;2')).toBe(3);
     });
+
+    it('should fallback to comma when no delimiter specified', () => {
+      expect(calculator.add('//\n1,2')).toBe(3);
+    });
+
+    it('should handle empty number string after custom delimiter', () => {
+      expect(calculator.add('//;\n')).toBe(0);
+    });
   });
 });
