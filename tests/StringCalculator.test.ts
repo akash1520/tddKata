@@ -53,4 +53,18 @@ describe('StringCalculator', () => {
     });
   });
 
+  describe('Large numbers', () => {
+    it('should ignore numbers bigger than 1000', () => {
+      expect(calculator.add('2,1001')).toBe(2);
+    });
+
+    it('should include numbers equal to 1000', () => {
+      expect(calculator.add('2,1000')).toBe(1002);
+    });
+
+    it('should ignore multiple large numbers', () => {
+      expect(calculator.add('1,1001,2,2000,3')).toBe(6);
+    });
+  });
+
 });
